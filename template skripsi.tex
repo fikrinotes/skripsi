@@ -1,0 +1,1418 @@
+\documentclass[a4paper,12pt]{report}
+% see pages 625 for the explanation of packages below
+
+\usepackage{ragged2e} %set the allign of a paragraph
+\usepackage{lipsum}% http://ctan.org/pkg/lipsum
+\usepackage[dotinlabels]{titletoc}% http://ctan.org/pkg/titletoc
+\usepackage{tocloft}
+\usepackage{wrapfig}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage[section]{placeins}
+\usepackage{lscape}
+
+\usepackage[top=3cm,bottom=3cm,left=3.77cm,right=3cm]{geometry}
+%\usepackage{tikz}
+%\usepackage{filecontents}
+%\usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{afterpage}
+\usepackage{amsmath}
+%\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[framed,autolinebreaks]{mcode}
+\usepackage{sectsty}
+\usepackage{textcomp}
+\usepackage{indentfirst}%the beginning of chapter/section is intended by usual paragraph indentetion
+\usepackage[font=footnotesize]{caption}
+% paket yg ditambahin sendiri
+\usepackage{booktabs}
+
+
+\linespread{2}
+\setlength{\parindent}{4em}
+\everymath{\displaystyle}
+
+
+\titleformat{\chapter}[display]{\center\normalfont\large\bfseries}{\MakeUppercase{\chaptertitlename}\ \thechapter}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+\sectionfont{\large}
+
+\renewcommand{\cfttoctitlefont}{\large\bfseries}
+%==================================================================
+\addtocontents{toc}{\protect\flushleft\protect\afterpage{}}
+
+\titlecontents{chapter}
+[0pt]
+{\vspace{1.5em}\small\bfseries}%
+{\contentsmargin{0pt}%
+\makebox[0em][l]{BAB \thecontentslabel\enspace}%
+\hspace{5em}}
+{}
+{\titlerule*[0.5pc]{.}\contentspage}
+
+
+\titlecontents{section}
+  [5.5em]{}{\thecontentslabel\hspace{1em}}{}{\titlerule*[0.5pc]{.}\contentspage}
+  
+\titlecontents{subsection}
+  [7.7em]{}{\thecontentslabel\hspace{1em}}{}{\titlerule*[0.5pc]{.}\contentspage}
+
+  
+%=============================================================
+%set panjang dan lebar untuk .tikz
+%\newlength\
+\newlength\figurewidth
+
+\lstset{language=Python,lineskip=1.5pt}
+
+%================tulisan dengan font Helvetica================
+\newenvironment{myfont}{\fontfamily{pcr}\selectfont}{\par}
+\DeclareTextFontCommand{\textmyfont}{\myfont}
+%=============================================================
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{setspace}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+%======================
+\newlength{\mylenj}
+
+\renewcommand{\cftfigpresnum}{\figurename\enspace}
+\renewcommand{\cfttabpresnum}{\tablename\enspace}
+\settowidth{\mylenj}{\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{5em}
+\addtolength{\cfttabnumwidth}{5em}
+
+\begin{document}
+%============================================================
+
+\renewcommand{\chaptername}{\large BAB}
+\renewcommand{\figurename}{Gambar}
+\renewcommand{\tablename}{Tabel}
+\renewcommand{\contentsname}{\vskip -2cm\centerline{DAFTAR ISI}}
+\renewcommand{\bibname}{DAFTAR PUSTAKA} 
+\renewcommand{\listfigurename}{\vskip -1.9cm \centerline{\large{DAFTAR GAMBAR}}}
+\renewcommand{\listtablename}{\vskip -2.2cm \centerline{\large{DAFTAR TABEL}}}
+\newcommand{\listappendicesname}{\vskip -1.8cm \centerline{\large{DAFTAR LAMPIRAN}}}
+\renewcommand*{\proofname}{\textbf{\emph{Bukti.}}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+%
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}{Lema}
+\newtheorem{proposition}{Proposisi}
+\newtheorem{fact}{Fakta}
+\newtheorem{definition}{Definisi}
+\newtheorem{corollary}{Akibat}
+\theoremstyle{definition}
+\newtheorem{example}{Contoh}
+%
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{section}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{section}.\arabic{table}}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\numberwithin{equation}{section}
+\numberwithin{definition}{section}
+\numberwithin{theorem}{section}
+\numberwithin{corollary}{section}
+\numberwithin{lemma}{section}
+\numberwithin{example}{section}
+\numberwithin{proposition}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+%===========================================
+\newlistof{appendices}{apc}{\listappendicesname}
+\newcommand{\appendices}[1]{\addcontentsline{apc}{appendices}{#1}}
+
+\newcommand{\newappendix}[1]{\section*{#1}\appendices{#1}}
+
+%\tolerance=1
+%\emergencystretch=\maxdimen
+%\hyphenpenalty=10000
+%\hbadness=10000
+%\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle}}}}
+%===========================================
+%Pendefinisian Untuk Lembar Pengesahan
+\newcommand{\TTD}[4][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2em]
+    \underline{#3} \\
+    [-1.1em]
+    {\small{NIP. #4}}
+  \end{tabular}
+}
+
+\newcommand{\TTDKajur}[2]{%
+   \begin{center}
+     \begin{tabular}{c c c}
+    Mengetahui, \\[-1em]
+    Ketua Departemen\\[2.5em]
+    \underline{#1} \\
+    [-1.1em]
+    {\small{NIP. #2}}
+  	 \end{tabular}
+   \end{center}
+}
+
+\newcommand{\TTDKosong}[4][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+  \end{tabular}
+}
+
+%=========={mulai mengetik dari sini}===========================
+\begin{titlepage}
+	\begin{center}
+	\renewcommand{\baselinestretch}{2.0}\normalsize
+	{\large \textbf{\textbf{PENGEMBANGAN MODEL \textit{DEEP LEARNING} UNTUK SISTEM DETEKSI INTRUSI JARINGAN BERBASIS \textit{DEEP NEURAL NETWORK}}}}\\
+	\vfill
+	{\large \textbf{SKRIPSI}}\\[1ex]
+	{\large \textbf{PROGRAM STUDI S1 MATEMATIKA}}
+	\vfill
+	\textbf{OLEH}\\
+	\textbf{{FIKRI MULYANA SETIAWAN}}\\
+	\textbf{NIM 2110432032}
+	\vfill
+	\includegraphics[scale=0.13]{UNANDLOGO.PNG}
+	\vfill
+	{\textbf{DEPARTEMEN MATEMATIKA DAN SAINS DATA}}\\
+	\textbf{FAKULTAS MATEMATIKA DAN ILMU PENGETAHUAN ALAM}\\
+	\textbf{UNIVERSITAS ANDALAS}\\
+	\textbf{PADANG}\\
+	\textbf{2025}
+	\end{center} 
+\end{titlepage}
+%==============================================================
+\pagenumbering{roman}
+\thispagestyle{empty}
+%
+\newpage
+\addcontentsline{toc}{chapter}{DAFTAR ISI}
+\tableofcontents
+\newpage
+%========================================================
+%DAFTAR GAMBAR JIKA PERLU
+\newpage
+\renewcommand{\baselinestretch}{2.0}\normalsize
+\addcontentsline{toc}{chapter}{DAFTAR GAMBAR} 
+\listoffigures
+%========================================================
+%DAFTAR TABEL JIKA PERLU
+\newpage
+\renewcommand{\baselinestretch}{2.0}\normalsize
+\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\listoftables
+%==============================================================
+%==============================================================
+%DAFTAR LAMPIRAN JIKA PERLU
+\newpage
+\renewcommand{\baselinestretch}{2.0}\normalsize
+\addcontentsline{toc}{chapter}{DAFTAR LAMPIRAN}
+{\listofappendices}
+
+%==============================================================
+\chapter{PENDAHULUAN}
+
+\pagenumbering{arabic}
+\thispagestyle{empty}
+
+\section{Latar Belakang}
+
+Pesatnya perkembangan teknologi informasi telah memudahkan manusia di banyak sektor penting kehidupan. Pada sektor ekonomi, perkembang- \ an teknologi informasi telah memudahkan manusia dalam perdagangan secara global. Pada sektor pendidikan dan pemerintahan, teknologi informasi telah memudahkan peneliti untuk berkolaborasi serta memudahkan pemerintah untuk menyebarkan informasi secara luas kepada masyarakat. Penggunaan teknologi informasi secara masif ini menghasilkan peningkatan ukuran jaringan dan jumlah data yang mengalir di jaringan dengan pesat \cite{ahmadNetworkIntrusionDetection2021}, seperti data transaksi keuangan, data informasi pribadi dan data penting lainnya. Akan tetapi, se- \ iring perkembangan teknologi informasi, ancaman yang menyertainya juga turut berkembang. 
+
+Menurut NIST (\textit{National Institute of Standard and Technology}), intrusi merupakan kejadian, atau rangkaian kejadian dimana seseorang mendapatkan atau mencoba mendapatkan akses ke sistem atau sumber daya sistem tanpa memiliki otoritas untuk melakukannya \cite{nationalinstituteofstandardstechnologyIntrusion}. Aktivitas intrusi merujuk pada akses tidak sah atau percobaan akses sumber informasi secara tidak sah dengan tujuan untuk merusak atau menyalahgunakan informasi tersebut \cite{mukkamalaIntrusionDetectionUsing2002}. 
+
+Pada dasarnya, hampir semua sistem jaringan yang ada mempunyai celah keamanan yang mengakibatkan sistem tersebut rentan terhadap intrusi dan penyalahgunaan oleh orang dalam \cite{luntSurveyIntrusionDetection1993}. Walaupun begitu, menemukan dan memperbaiki semua celah keamanan tersebut tidak mudah, dan di sisi lain mengembangkan sistem yang tidak memiliki celah sama sekali juga merupakan suatu hal yang hampir mustahil untuk dilakukan \cite{luntSurveyIntrusionDetection1993}\cite{denningIntrusionDetectionModel1987}. Oleh karena itu, diperlukan sebuah sistem yang mampu mendeteksi intrusi jaringan secara \textit{real-time} dan memberikan peringatan lebih awal (\textit{early warning}) sehingga pihak berwenang dapat mengatasinya sebelum serangan itu berkembang lebih lanjut. Sistem ini dikenal sebagai \textit{Intrusion Detection System} (IDS).
+
+\textit{Intrusion Detection System} (IDS) atau sistem deteksi intrusi merupakan sistem yang dikembangkan untuk memantau lalu lintas jaringan secara \textit{real-time} dan mendeteksi aktivitas mencurigakan yang berpontensi mengganggu keamanan data \cite{andyvictoramanoulEnhancedIntrusionDetection2024}\cite{kimLongShortTerm2016a}\cite{solomonIntrusionDetectionSystem2019}. Secara teknis, ketika seseorang mengakses informasi melalui sebuah jaringan teknologi komunikasi, segala informasi terkait aktivitas tersebut dapat direkam dan disalin untuk proses monitoring dan analisis keamanan jaringan menggunakan \textit{port mirroring technology}. Pada implementasinya, sistem deteksi intrusi dapat dikonfigurasikan dengan \textit{port mirroring technology} seperti \textit{Switched Port Analyzer} (SPAN), yang memungkinkan informasi mengenai aktivitas pada jaringan diakses oleh IDS untuk mengidentifikasi potensi adanya intrusi \cite{liMachineLearningAlgorithms2019}.
+
+Sistem deteksi intrusi pertama kali diperkenalkan oleh Jim Anderson pada tahun 1980 \cite{andersonComputerSecurityThreat1980} yang menggunakan pendekatan statistik untuk mendeteksi intrusi. Jim Anderson menggunakan asumsi awal bahwa suatu aktivitas dapat dikategorikan ke jenis aktivitas tertentu (normal atau serangan) jika aktivitas tersebut memperlihatkan sifat yang sama dengan kelompok aktivitas terntu, yaitu kelompok aktivitas normal dan serangan. Sejak saat itu, berbagai penelitian telah dilakukan untuk pengembangan sistem deteksi intrusi yang lebih baik, efektif, dan efisien. Salah satu penelitian yang cukup populer yaitu penelitian yang dilakukan oleh \textit{Lincoln Laboratory of MIT} yang melakukan evaluasi terhadap sistem deteksi intrusi menggunakan metode \textit{receiver operating characteristic} (ROC). Akan tetapi, penelitian ini mendapat cukup banyak kritikan, seperti yang dilakukan oleh John McHugh yang mengkritik metode evaluasi yang digunakan karena metode ROC sendiri memiliki beberapa asumsi dasar yang perlu terpenuhi \cite{mchugh1998LincolnLaboratory2000}, sedangkan pada penelitian tersebut tidak disebutkan secara jelas apakah asumsi tersebut terpenuhi. Tidak adanya informasi yang jelas mengenai terpenuhinya asumsi ini dapat memberikan hasil evaluasi yang bias \cite{mchughTestingIntrusionDetection2000}. 
+
+Tak berselang lama setelah penelitian yang dilakukan oleh \textit{Lincoln Laboratory of MIT}, Pada tahun 2001 Dickerson melakukan penelitian mengenai pengembangan sistem deteksi intrusi jaringan menggunakan pendekatan \textit{fuzzy logic} \cite{dickersonFuzzyIntrusionDetection2001}. Pada penelitian ini, metode \textit{Fuzzy C-Means Clustering} untuk mengenali intrusi. Metode ini bekerja cukup baik walaupun dengan \textit{false negative rate}, yaitu proporsi hasil negatif yang salah diprediksi oleh model, bernilai cukup tinggi.
+
+Penelitian lain kemudian dilakukan oleh Hai Thanh Nguyen pada tahun 2011 yang menggunakan \textit{Genetic Feature Selection} (GeFS) untuk seleksi fitur, yaitu variabel independen pada dataset, untuk pengembangan sistem deteksi serangan web. Eksperimen pada penelitian ini menunjukkan bahwa penerapan \textit{Genetic Feature Selection} mampu mengurangi 63\% fitur yang tidak relevan dan hanya mengurangi 0.12\% akurasi deteksi serangan. 
+
+Beberapa tahun berikutnya, pada tahun 2019, Xianwei Gao mengembangkan sistem deteksi intrusi dengan pendekatan \textit{machine learning}. Xianwei menggunakan metode \textit{ensemble} adaptif dengan beberapa classifier, seperti \textit{Decision Tree}, \textit{Deep Neural Network}, \textit{K-Nearest Neighbor} (KNN), dan beberapa \textit{classifier} lain \cite{gaoAdaptiveEnsembleMachine2019} dengan dataset pelatihan yang bernama NSL-KDD \cite{zhaoNSLKDD} untuk pengembangan sistem deteksi intrusi. Dengan menggunakan pendekatan ini, metode ensemble adaptif yang dikembangkan berhasil memperoleh akurasi 85.2\%. Penelitian ini juga menunjukkan bahwa kualitas data pelatihan dalam pengembangan model \textit{machine learning} merupakan faktor yang sangat penting untuk keberhasilan deteksi intrusi. 
+
+Disamping pendekatan machine learning klasik, pengembangan sistem deteksi intrusi jaringan dengan model berbasis \textit{deep learning} juga menunjukkan hasil yang cukup menjanjikan \cite{yinDeepLearningApproach2017}\cite{kasongoDeepLearningTechnique2023}. Pada tahun 2017, Chuanlong Yin menggunakan pendekatan deep learning dengan model \textit{Recurrent Neural Network} (RNN) untuk pengembangan sistem deteksi intrusi jaringan. Berdasarkan hasil yang diperoleh, diketahui bahwa sistem deteksi intrusi ini menunjukkan performa yang lebih baik dibandingkan model machine learning tradisional seperti \textit{random forest} dan \textit{naive bayes classifier} \cite{yinDeepLearningApproach2017}. Model berbasis RNN menawarkan akurasi yang tinggi dengan \textit{false positive rate} yang rendah. 
+
+Selain itu, pada tahun 2020 Wooyeon Jo \textit{et. al.} melakukan pendekatan yang berbeda dibandingkan penelitian terkait sistem deteksi intrusi sebelumnya. Pada penelitian ini, model \textit{Convolutional Neural Network} (CNN) digunakan untuk pengembangan sistem deteksi intrusi \cite{joPacketPreprocessingCNNBased2020}. Karena kualitas data pelatihan merupakan faktor penting untuk keberhasilan deteksi \cite{gaoAdaptiveEnsembleMachine2019}, maka terdapat 3 teknik \textit{preprocessing} yang diajukan pada penelitian ini, yaitu \textit{direct conversion}, \textit{weighted conversion} dan \textit{compressed conversion} \cite{joPacketPreprocessingCNNBased2020}. Ketiga teknik \textit{preprocessing} ini digunakan untuk mengonversi data pada dataset NSL-KDD \cite{zhaoNSLKDD} menjadi data gambar untuk diolah menggunakan model \textit{Convolutional Neural Network} (CNN). Dengan menggunakan ketiga teknik \textit{preprocessing} ini, model CNN yang dikembangkan berhasil mencapai akurasi sebesar 88.2\%. Penelitian ini menunjukkan performa keunggulan model berbasis \textit{deep learning} untuk masalah deteksi intrusi.
+
+Berdasarkan penelitian mengenai sistem deteksi intrusi yang telah dilakukan sebelumnya, penulis melihat bahwa masih tersedia ruang yang cukup luas untuk pengembangan model sistem deteksi intrusi jaringan dengan pendekatan \textit{deep learning}. Oleh karena itu, pada penelitian ini penulis akan mengkaji penerapan model \textit{deep learning} \textit{Deep Neural Network} (DNN) untuk sistem deteksi intrusi jaringan. Pada penelitian ini, model DNN akan dilatih untuk mendeteksi anomali pada data biner (BENIGN dan ATTACK) sehingga dapat digunakan untuk deteksi intrusi, bahkan pada jenis serangan yang belum pernah dilihat oleh model sebelumnya. 
+
+\section{Rumusan Masalah}
+
+Berdasarkan latar belakang di atas, masalah yang dibahas pada penelitian ini adalah :
+\begin{enumerate}
+	\item Bagaimana arsitektur dan \textit{hyperparameter} dari model deteksi intrusi berbasis \textit{Deep Neural Network} (DNN)?
+	\item Bagaimana performa dari model deteksi intrusi berbasis \textit{Deep Neural Network} (DNN) berdasarkan metrik evaluasi \textit{accuracy}, \textit{precision}, dan \textit{recall}?
+\end{enumerate}
+
+\section{Tujuan Penelitian}
+
+Berdasarkan rumusan masalah yang telah dipaparkan, penelitian ini memiliki tujuan yang ingin dicapai, yaitu:
+\begin{enumerate}
+	\item Memperoleh arsitektur dan \textit{hyperparameter} model deteksi intrusi berbasis \textit{Deep Neural Network} (DNN).
+	\item Mengetahui seberapa baik model berbasis \textit{Deep Neural Network} (DNN) dalam melakukan deteksi intrusi berdasarkan metrik evaluasi \textit{accuracy}, \textit{precision}, dan \textit{recall}.
+\end{enumerate} 
+
+\section{Sistematika Penulisan}
+
+Skripsi ini terdiri dari 4 Bab. Pada Bab I, dimuat latar belakang, perumusan masalah, tujuan penulisan dan sistematika penulisan. Kemudian pada bab II dibahas tentang konsep dasar yang menjadi landasan untuk penelitian ini. Pada Bab III, terdapat pembahasan mengenai implementasi \textit{Deep Neural Network} (DNN) untuk sistem deteksi intrusi, serta evaluasi dari hasil yang diperoleh. Terakhir untuk Bab IV memuat kesimpulan dari penelitian yang telah dilaksanakan.
+
+%==============================================================
+\chapter{LANDASAN TEORI}
+\thispagestyle{empty}
+
+\section{Sistem Komunikasi Jaringan Komputer}
+Jaringan komputer merupakan kumpulan komputer (\textit{node}) yang dihubungkan melalui saluran transmisi tertentu yang memungkinkan komputer untuk berkomunikasi dan berbagi informasi \cite{robertazziIntroductionComputerNetworking2017}. Seiring dengan perkembangan teknologi, terdapat berbagai macam saluran transmisi yang digunakan untuk jaringan komputer, baik saluran berbasis kabel (\textit{wired}) ataupun tanpa kabel (\textit{wireless}). Keberadaan saluran transmisi \textit{wired} dan \textit{wireless} memungkinkan setiap komputer yang ada di dunia ini terhubung melalui sebuah jaringan komunikasi yang lebih besar yang dikenal sebagai \textit{internet}.
+
+Agar komputer yang terkoneksi di dalam jaringan dapat berkomunikasi dengan baik, terdapat aturan yang meregulasi format data yang dikirimkan, mekanisme pengiriman data, dan tujuan pengiriman data. Aturan ini disebut sebagai protokol \cite{tanenbaumComputerNetworks2011}. Terdapat beberapa protokol yang digunakan untuk fungsi yang berbeda-beda, seperti \textit{Transmission Control Protocol} (TCP) dan \textit{User Datagram Format} (UDP). 
+
+Pada saat komputer berkomunikasi melalui jaringan, data ditransmisikan dalam bentuk pecahan data yang lebih kecil yang disebut sebagai \textit{packets}, dan masing-masing \textit{packets} ditransmisikan melalui rute yang berbeda-beda untuk efisiensi transmisi \cite{tanenbaumComputerNetworks2011}\cite{robertazziIntroductionComputerNetworking2017}. Mekanisme ini dikenal dengan nama \textit{packets switching}.
+
+\begin{figure}[H]
+	\center \includegraphics[width=\linewidth]{assets/packets_switching}
+	\caption{Ilustrasi mekanisme pengiriman pengiriman data dengan \textit{packets switching}} 
+	\label{packets_switching}
+\end{figure}
+
+Pengiriman \textit{packets} dengan mekanisme seperti ini mengakibatkan \textit{packets} tidak langsung terkirim dari pengirim ke penerima, melainkan melalui \textit{node} lain yang terhubung ke jaringan yang sama terlebih dahulu, seperti pada gambar \ref{packets_switching}. Misalnya, Data yang dikirimkan dari Melbourne (Australia) dengan penerima di Padang mungkin tidak dapat terjadi secara langsung, melainkan melalui beberapa node lain pada jaringan terlebih dahulu, misalnya melalui Jakarta dan kemudian baru diteruskan ke Padang. Data yang dipecah menjadi sejumlah \textit{packets} dapat melewati rute yang berbeda-beda walaupun memiliki tujuan yang sama. Penentuan rute transmisi \textit{packets} yang dikirimkan ini disebut sebagai \textit{routing} \cite{tanenbaumComputerNetworks2011}.
+
+\section{Intrusi}
+
+Menurut NIST (\textit{National Institute of Standard and Technology}), intrusi merupakan kejadian, atau rangkaian kejadian dimana seseorang mendapatkan atau mencoba mendapatkan akses ke sistem teknologi komunikasi atau sumber daya sistem tanpa memiliki otoritas untuk melakukannya \cite{nationalinstituteofstandardstechnologyIntrusion}. Aktivitas intrusi ini merujuk pada akses tidak sah atau percobaan akses sumber informasi secara tidak sah dengan tujuan untuk merusak atau menyalahgunakan informasi tersebut \cite{mukkamalaIntrusionDetectionUsing2002}.  Beberapa jenis serangan yang cukup populer untuk melakukan intrusi meliputi:
+\begin{enumerate}
+	\item Denial of Services (DOS). Serangan ini dilakukan dengan cara membanjiri jaringan dengan lalu lintas yang sangat tinggi dalam waktu yang relatif singkat \cite{hnamteDDoSAttackDetection2024}.
+	
+	\item \textit{Port Scan}. Salah satu langkah awal yang dilakukan untuk menyerang sebuah jaringan teknologi komunikasi adalah \textit{reconnaissance} (pengintaian). Langkah ini dilakukan untuk mengumpulkan informasi mengenai jaringan yang akan diserang dan menemukan celah \cite{hartpenceCombatingTCPPort2020}.
+	
+	\item \textit{Brute Force}. \textit{Brute force} bekerja dengan cara menebak kredensial login (\textit{username} dan \textit{password}) menggunakan berbagai kombinasi yang mungkin untuk mendapatkan akses pengguna tertentu \cite{groverEfficientBruteForce2020}. 
+	
+	\item \textit{Bot} dan \textit{Botnet}. Bot merupakan program yang dikontrol jarak jauh untuk menyerang jaringan teknologi komunikasi. Botnet merupakan sekumpulan bot yang dikontrol oleh seorang penyerang yang disebut sebagai \textit{botmaster} dengan tujuan untuk mengirimkan \textit{spam} dan mencuri data \cite{qureshiBotnetAttacksCharacteristics2023}.
+	
+	\item \textit{Cross-Site Scripting} (XSS). XSS merupakan jenis serangan dimana penyerang akan menyisipkan skrip/kode berbahaya pada website di sisi \textit{client} \cite{weamieCrossSiteScriptingAttacks2022}.
+	
+	\item \textit{SQL Injection}. \textit{SQL Injection} merupakan jenis serangan yang menyerang data yang tersimpan pada database sebuah aplikasi dengan cara menyisipkan perintah SQL tertentu sehingga merusak fungsionalitas sistem dan memungkinkan penyerang mendapatkan akses yang tidak sah \cite{paulSQLInjectionAttack2024}\cite{owaspSQLInjection}.
+	
+	\item \textit{Heartbleed}. \textit{Heartbleed} merupakan sebuah celah/kerentanan (\textit{vulnerability}) yang ada pada koneksi \textit{open SSL}, yaitu perangkat lunak yang memungkinkan aplikasi di dalam sistem dapat berkomunikasi secara aman. Celah inilah yang kemudian digunakan oleh penyerang untuk menyerang sistem jaringan komunikasi.
+\end{enumerate}
+
+\section{Sistem Deteksi Intrusi}
+
+Sistem deteksi intrusi / \textit{intrusion detection system} (IDS) merupakan sebuah perangkat atau aplikasi yang dirancang untuk memantau lalu lintas jaringan dan mendeteksi aktivitas mencurigakan dan berpontensi menimbulkan pelanggaran hukum \cite{solomonIntrusionDetectionSystem2019}. Secara prinsip, sistem deteksi intrusi mampu memantau lalu lintas jaringan dan mendeteksi aktivitas mencurigakan secara real-time sehingga mampu memberikan peringatan lebih awal (\textit{early warning}) kepada pihak berwenang untuk ditangani sesegera mungkin. 
+
+Terdapat beberapa pendekatan yang pernah dilakukan untuk pengembangan sistem deteksi intrusi, mulai dari pendekatan \textit{fuzzy logic} yang dilakukan oleh Dickerson pada tahun 2001 \cite{dickersonFuzzyIntrusionDetection2001}. Penelitian mengenai pengembangan sistem deteksi intrusi pada tahun-tahun berikutnya cukup progresif, dengan adanya pendekatan \textit{machine learning} klasik, hingga pendekatan \textit{deep learning} yang menawarkan akurasi tinggi dan \textit{false negative rate} yang rendah. Tren penelitian mengenai sistem deteksi intrusi pada beberapa tahun kebelakang menunjukkan kecendrungan penggunaan model \textit{deep learning} untuk sistem deteksi intrusi yang andal.
+
+\section{Neural Network}
+
+ \textit{Neural network/artifical neural network} merupakan salah satu model dalam machine learning yang menjadi landasan utama untuk berbagai jenis teknologi berbasis kecerdasan buatan. \textit{Neural network} pertama kali muncul pada awal tahun 1940 dengan kemampuan untuk memodelkan data menggunakan fungsi nonlinier \cite{qamarArtificialNeuralNetworks2023}. Pada masa tersebut, pengembangan model \textit{neural network} didasari oleh 2 tujuan utama, yaitu untuk memahami bagaimana sistem saraf manusia bekerja dan mengembangkan sebuah sistem yang terinspirasi oleh jaringan saraf biologis sehingga dapat dimanfaatkan untuk mengembangkan sistem kecerdasan buatan. Hal ini dilakukan karena, meskipun komputer dapat melakukan proses komputasi lebih cepat dibandingkan otak manusia, komputer tidak bisa menyamai kemampuan kognitif otak manusia \cite{prietoNeuralNetworksOverview2016}.
+
+Model \textit{neural network} mengambil input berupa vektor yang merepresentasikan $p$ fitur pada data, yaitu $X = (X_{1}, X_{2}, ..., X_{p})$ dan membentuk fungsi nonlinear $f(X)$ untuk memprediksi nilai $Y$ \cite{sohilIntroductionStatisticalLearning2022}. 
+Model \textit{neural network} direpresentasikan oleh fungsi $f(X)$ sebagai berikut :
+
+\begin{equation}
+	f(X) = \beta_{0} + \sum\limits_{j=1}^{K}\beta_{k}g\left(w_{k0} + \sum\limits_{j=1}^{p}w_{kj}X_{j}\right)
+	\label{modelNN}
+\end{equation}
+
+\noindent dimana : \\
+\begin{tabular}{l c l}
+	$\beta_i$ &:& bias model \\
+	$w_{kj}$ &:& bobot yang menghubungkan input $x_j$ ke neuron $A_k$ \\
+	$g(\cdot)$ &:& fungsi aktivasi
+\end{tabular} \\
+
+Pembeda antara \textit{neural network} dengan model \textit{machine learning} lainnya adalah struktur dari modelnya yang terdiri dari \textit{input layer}, \textit{hidden layer}, dan \textit{output layer}. Setiap layer pada model \textit{neural network} terdiri dari \textit{node}, yaitu \textit{unit} komputasi yang merepresentasikan nilai yang disimpan pada tiap layer. Proses komputasi pada model \textit{neural network} dilakukan di sejumlah \textit{node} pada \textit{hidden layer} dan \textit{output layer} yang disebut \textit{neuron} \cite{sohilIntroductionStatisticalLearning2022}\cite{qamarArtificialNeuralNetworks2023}. 
+\begin{enumerate}
+	\item \textit{Input layer} merupakan \textit{layer} yang terdiri dari beberapa \textit{node} yang merepresentasikan fitur pada data. vektor $X = (X_{1}, X_{2}, ..., X_{p})$ digunakan untuk membentuk \textit{input layer} dan direpresentasikan oleh \textit{node} sebanyak \textit{p}. 
+	\item \textit{Hiddden layer} berada di antara \textit{input layer} dan \textit{output layer}. \textit{Hidden layer} merupakan tempat dimana data input diproses sesuai dengan bobot dan fungsi aktivasi yang telah ditentukan.
+	\item  \textit{Output layer} akan menerima hasil pemrosesan dari \textit{hidden layer} dan mentransformasinya menjadi nilai output.
+\end{enumerate}
+
+Pada gambar (\ref{NN1layer}), setiap \textit{unit} pada $X, A$ dan $f(X)$ disebut sebagai \textit{node}. Tanda panah pada gambar di atas menunjukkan bahwa setiap \textit{node} pada \textit{input layer} dihubungkan ke setiap \textit{node} pada \textit{hidden layer}. \textit{Layer} dengan koneksi antar \textit{node} seperti ini disebut sebagai \textit{dense layer}. Nilai pada neuron di \textit{hidden layer}, yaitu $A_{1}, A_{2}, ... A_{k}$ dikenal sebagai nilai aktivasi dan dihitung sebagai berikut :
+\begin{equation}
+	A_{k}= g\left(w_{k0} + \sum\limits_{j=1}^{p}w_{kj}X_{j}\right)
+	\label{nilaiA}
+\end{equation}
+
+\begin{figure}[H]
+	\center \includegraphics[width=\linewidth]{assets/graf4}
+	\caption{Struktur Model \textit{neural network} dengan 1 hidden layer} 
+	\label{NN1layer}
+\end{figure}
+Fungsi $g(\cdot)$ pada persamaan (\ref{nilaiA}) disebut sebagai fungsi aktivasi nonlinear. $K$ buah nilai aktivasi ini diberikan ke \textit{output layer} sehingga menghasilkan :
+\begin{equation}
+	f(X) = \beta_{0} + \sum\limits_{j=1}^{K}\beta_{k}A_{k}
+\end{equation}
+
+Nilai parameter $\beta_{0}, \beta_{1}, ..., \beta_{K}$ diperoleh dari proses training model. Model \textit{neural network} yang hanya memiliki 1 \textit{hidden layer} seperti ini disebut sebagai \textit{single layer neural network}. 
+
+Pada awalnya, fungsi \textit{sigmoid} lebih banyak digunakan sebagai fungsi aktivasi, fungsi yang sama yang digunakan untuk mengubah fungsi linear menjadi nilai yang berada pada interval 0 hingga 1. Akan tetapi, seiring dengan perkembangan zaman, fungsi \textit{Rectified Linear Unit} (ReLU) lebih cenderung digunakan sebagai fungsi aktivasi karena dapat dihitung dan disimpan lebih efisien daripada fungsi \textit{sigmoid}. 
+
+Selain fungsi \textit{sigmoid} dan ReLU, terdapat beberapa fungsi aktivasi lain yang umum digunakan, misalnya fungsi \textit{tangent} dan fungsi \textit{softmax} \cite{vinayakumarDeepLearningApproach2019}. Pemilihan fungsi aktivasi yang akan digunakan perlu mempertimbangkan masalah apa yang akan dihadapi oleh model. Sebagai contoh, fungsi \textit{sigmoid} cenderung digunakan untuk masalah klasifikasi biner, sedangkan fungsi \textit{softmax} cenderung digunakan untuk klasifikasi multi-kelas.
+
+\begin{longtable}{|l|c|c|c|}
+	\caption{Beberapa fungsi aktivasi} \label{tabelfungsi}\\
+	\hline
+	\textbf{Nama Fungsi} & \textbf{Definisi} & \textbf{Domain} & \textbf{Range} \\ \hline
+	% Baris untuk Sigmoid
+	Sigmoid & $\sigma(x) = \frac{1}{1 + e^{-x}}$ & $\mathbb{R}$ & $(0, 1)$ \\
+	\hline
+	
+	% Baris untuk ReLU
+	ReLU (Rectified Linear Unit) & $f(x) = \max(0, x)$ & $\mathbb{R}$ & $[0, \infty)$ \\
+	\hline
+	
+	% Baris untuk Softmax
+	Softmax & $\sigma(\mathbf{x})_i = \frac{e^{x_i}}{\sum_{j=1}^{J} e^{x_j}}$ & $\mathbb{R}^J$ & $(0, 1)$ \\
+	\hline
+	
+	% Baris untuk Linear
+	Linear & $f(x) = x$ & $\mathbb{R}$ & $(-\infty, \infty)$ \\
+	\hline
+\end{longtable}
+
+\section{\textit{Deep Neural Network}}
+
+Model \textit{neural network} modern dapat terdiri dari lebih dari 1 \textit{hidden layer}, dan bahkan masing-masing \textit{layer} terdiri dari banyak \textit{node}. Model \textit{neural network} dengan arsitektur seperti ini disebut sebagai \textit{Deep Neural Network}, \textit{Multi-Layer Neural Network}, atau \textit{Multi-Layer Perceptron}. Dengan adanya sejumlah \textit{hidden layer}, proses komputasi dapat dilakukan dengan lebih mudah dan akurat\cite{sohilIntroductionStatisticalLearning2022}. 
+
+\begin{figure}[H]
+	\center \includegraphics[width=290px]{assets/graf3}
+	\caption{ilustrasi \textit{Multilayer Neural Network}} 
+	\label{sumbar}
+\end{figure}
+
+Perhitungan masing-masing layer dilakukan sebagai berikut. Misalkan pada layer pertama terdapat $K_1$ neuron, maka:
+\begin{equation}
+	\begin{split}
+		A_k^{(1)} &= h_k^{(1)}(X) \\
+				  &= g\left(w_{k0}^{(1)} + \sum\limits_{j=1}^{p}w_{kj}^{(1)}X_{j}\right)
+	\end{split}
+	\label{multilayerA1}
+\end{equation}
+
+Untuk perhitungan pada layer kedua, layer pertama akan dianggap sebagai layer input, kemudian dilakukan perhitungan yang serupa dengan persamaan \ref{multilayerA1}. Misalkan pada layer kedua terdapat $K_2$ neuron, maka perhitungan untuk masing-masing neuron ($A_l^{(2)}$) adalah sebagai berikut :
+\begin{equation}
+	\begin{split}
+		A_l^{(2)} &= h_l^{(2)}(X) \\
+		&= g\left(w_{l0}^{(2)} + \sum\limits_{k=1}^{K_1}w_{lk}^{(2)}A_{k}^{(1)}\right)
+	\end{split}
+	\label{multilayerA1}
+\end{equation}
+
+\noindent dengan: \\
+\begin{tabular}{p{1cm} p{0.5cm} p{10cm}}
+	$A_l^{(2)}$ &:& neuron ke-$l$ pada \textit{layer} ke-2 \\
+	$g(\cdot)$ &:& fungsi aktivasi \\
+	$w_{l0}^{(2)}$ &:& bias \\
+	$A_k^{(1)}$ &:& neuron ke-$k$ pada layer pertama \\
+	$w_{lk}^{(2)}$ &:& bobot yang menghubungkan neuron ke-$k$ pada layer pertama dengan neuron ke-$l$ pada layer kedua \\
+\end{tabular} \\
+
+Jika arsitektur \textit{neural network} memiliki lebih dari 2 \textit{layer}, perhitungan masing-masing layer dilakukan dengan cara yang sama. Pada \textit{layer} ketiga, \textit{layer} kedua digunakan sebagai \textit{input layer}. Pada \textit{layer} keempat, \textit{layer} ketiga digunakan sebagai \textit{input layer}, begitu seterusnya. 
+
+Oleh karena terdapat $p$ fitur pada variabel $X$ dan terdapat $K$ unit neuron pada setiap hidden layer $A_1$, maka terdapat sebanyak $K \times (p+1)$ bobot (\textit{weights}) $w_{kj}$ yang menghubungkan input layer $X$ ke hidden layer $A_1$. Bobot $w_{kj}$ dapat direpresentasikan sebagai matriks $\mathbf{W}$, dimana :
+
+\begin{equation}
+	\begin{split}
+		\mathbf{W}_1 &=  
+		\begin{bmatrix}
+			w_{1, 1} & w_{1, 2} & w_{1, 3} & \dots & w_{1, p} & w_{1, 0} \\
+			w_{2, 1} & w_{2, 2} & w_{2, 3} & \dots & w_{2, p} & w_{2, 0} \\
+			w_{3, 1} & w_{3, 2} & w_{3, 3} & \dots & w_{3, p} & w_{3, 0} \\
+			\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			w_{K, 1} & w_{K, 2} & w_{K, 3} & \dots & w_{K, p} & w_{K, 0}\\
+		\end{bmatrix} \\
+	\end{split}
+	\label{matriksW}
+\end{equation}
+
+\begin{equation}
+	\begin{split}
+		X &=  
+		\begin{bmatrix}
+			X_{1}  \\
+			X_{2}  \\
+			\vdots    \\ 
+			X_{p}  \\
+			1 \\
+		\end{bmatrix} \\
+	\end{split}
+	\label{vektorXl}
+\end{equation}
+
+
+Dengan begitu, perhitungan nilai aktivasi pada masing-masing neuron pada \textit{hidden layer} $A_1$ dapat dilakukan sebagai berikut \cite{sohilIntroductionStatisticalLearning2022} :
+\begin{equation}
+	\begin{split}
+		A_{1} &= g\left( \mathbf{W}_1X \right)  
+	\end{split}
+	\label{vektorAl}
+\end{equation} 
+
+\section{\textit{Loss Function}}
+Pelatihan model \textit{deep learning} dilakukan dengan tujuan untuk mengestimasi parameter yang menghasilkan model dengan performa yang optimal. Indikator yang digunakan untuk menentukan seberapa optimal model bekerja adalah \textit{loss function}. \textit{Loss function} merupakan fungsi yang merepresentasikan seberapa jauh selisih nilai yang dihasilkan model dengan nilai yang sebenarnya. Pada masalah klasifikasi biner (\textit{binary classification}), \textit{loss function} yang umum digunakan adalah \textit{log-loss function} atau lebih populer dengan nama \textit{binary cross-entropy} (BCE). \textit{Binary cross-entropy} mengukur seberapa jauh selisih kelas biner dengan probabilitas prediksi kelas yang diperoleh berdasarkan model. \cite{elharroussLossFunctionsDeep2025}. BCE dinyatakan dalam bentuk fungsi pada persamaan \ref{bce}.
+\begin{equation}
+	\begin{split}
+		L(y, \hat{y}) = - (y \log(\hat{y}) + (1 - y) \log(1 - \hat{y})) \\
+	\end{split}
+	\label{bce}
+\end{equation}
+dimana : \\
+\begin{tabular}{p{1cm} p{0.5cm} p{10cm}}
+	$y$ &:& kelas sebenarnya (0 atau 1) \\
+	$\hat{y}$ &:& probabilitas kelas prediksi, dimana {$\hat{y} \in (0, 1)$} \\
+\end{tabular} \\
+
+\section{Optimasi Model}
+Model \textit{deep learning} melibatkan sejumlah bobot (\textit{weights}) yang perlu ditentukan nilainya. Tujuan utama dari proses optimasi model adalah menentukan bobot model sehingga menghasilkan \textit{loss function} yang minimal. Jika \textit{loss function} dinyakan sebagai $L(y, \hat{y})$, maka proses optimasi model dilakukan dengan cara mengestimasi nilai bobot $w_{kj}$ sehingga $\frac{\partial L}{\partial w_{kj}} = 0$. 
+
+\textit{Backpropagation} merupakan metode yang dikembangkan untuk mengestimasi nilai dari semua parameter ini. \textit{Backpropagation} mampu memperbarui parameter pada model \textit{deep learning} selama proses pelatihan melalui 2 fase penting, yaitu fase \textit{forward} dan fase \textit{backward} dengan mekanisme sebagai berikut \cite{montesinoslopezMultivariateStatisticalMachine2022}\cite{pajankarHandsonMachineLearning2022}: 
+\begin{enumerate}
+	\item Fase \textit{forward}. Pada fase ini, data input akan diteruskan ke \textit{hidden layer} untuk diproses menggunakan bobot awal yang ditentukan. Berikutnya, hasil pemrosesan oleh \textit{hidden layer} akan digunakan untuk menghitung nilai \textit{output} pada \textit{output layer}. Setelah \textit{output} diperoleh, selanjutnya \textit{loss function} dari \textit{output} akan dihitung.
+	\item Fase \textit{backward}. Setelah \textit{loss function} dihitung, turunan dari \textit{loss function} (\textit{gradient}) terhadap setiap bobot pada \textit{layer} akan dihitung dengan arah mundur (\textit{backward}), dimulai dari \textit{layer} yang paling dekat dengan \textit{output layer} \cite{aggarwalNeuralNetworksDeep2018}.  
+\end{enumerate}
+
+Pada arstiketur \textit{neural network} yang kompleks, proses perhitungan \textit{gradient} ini melibatkan operasi yang menggunakan aturan rantai multi-variabel. Misalkan terdapat sejumlah neuron $h_1, h_2, ..., h_k$ dan 1 neuron output $o$ dan $w_{h_r, h_{r+1}}$ adalah bobot yang menghubungkan neuron $h_r$ dengan neuron $h_{r+1}$. Secara matematis, perhitungan gradien \textit{loss function} terhadap bobot $w_{h_r, h_{r+1}}$ dinyatakan pada persamaan.
+\begin{equation}
+	\begin{split}
+		\frac{\partial L}{\partial w_{(h_{r-1},h_r)}} = \frac{\partial L}{\partial o} \cdot \left[ \frac{\partial o}{\partial h_k} \prod_{i=r}^{k-1} \frac{\partial h_{i+1}}{\partial h_i} \right] \frac{\partial h_r}{\partial w_{(h_{r-1},h_r)}} \quad \forall r \in 1...k \\
+	\end{split}
+	\label{bpformula}
+\end{equation}
+
+
+Untuk menghitung gradien ini secara efektif dan memperbarui bobot yang ada, salah satu metode yang populer digunakan adalah \textit{Adaptive Moment Estimation} (ADAM).
+
+\subsection{\textit{Adaptive Moment Estimation} (ADAM)}
+Seperti namanya, ADAM (\textit{Adaptive Moment Estimation}) merupakan optimizer berbasis momentum \cite{sethiComprehensiveReviewOptimizers2019}. Konsep momentum memungkinkan ADAM untuk konvergen lebih cepat, dan yang lebih penting, memperbarui \textit{learning rate} ($\alpha$) secara adaptif. ADAM memperbarui \textit{learning rate} secara adaptif untuk setiap parameter berdasarkan momen pertama ($m_t$) dan momen kedua ($v_t$) dari gradien \cite{sethiComprehensiveReviewOptimizers2019}. Optimasi ADAM bekerja dengan langkah sebagai berikut:
+\begin{enumerate}
+	\item definisikan \textit{stepsize} ($alpha$), laju peluruhan eksponensial untuk pendugaa momen ($\beta_1, \beta_2$), dan vektor parameter awal ($\theta_0$).
+	\item definisikan fungsi objektif dengan parameter $\theta$
+	\item definisikan vektor momen pertama, yaitu $m_0 \leftarrow 0$ 
+	\item definisikan vektor omen kedua, yaitu $v_0 \leftarrow 0$
+	\item definisikan $t \leftarrow 0$
+	\item selama $\theta_t$ belum konvergen, ulangi langkah berikut:
+	\begin{enumerate}
+		\item $t \leftarrow t+1$
+		\item $g_t = \nabla_\theta L_t(\theta_{t-1})$ (hitung gradien dari fungsi objektif)
+		\item $m_t = \beta_1m_{t-1} + (1-\beta_1)g_t$ (perbarui estimasi momen pertama)
+		\item $v_t = \beta_2v_{t-1} + (1-\beta_2)g_t^2$ (perbarui estimasi momen kedua)
+		\item $\hat{m}_t = \frac{m_t}{1-\beta_1^t}$ (hitung estimasi momen pertama dengan bias yang sudah dikoreksi)
+		\item $\hat{v}_t = \frac{v_t}{1-\beta_2^t}$ (hitung estimasi momen kedua dengan bias yang sudah dikoreksi)
+		\item $\theta_t = \theta_{t-1} - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\epsilon}$ (perbarui estimasi parameter $\theta$)
+	\end{enumerate} 
+	\item diperoleh parameter $\theta$ terbaru
+\end{enumerate}
+
+\section{Metrik Evaluasi Model}
+Terdapat beberapa metrik yang digunakan untuk mengevaluasi performa model \textit{deep learning}, beberapa di antaranya yang menjadi fokus pada penelitian ini yaitu \textit{accuracy}, \textit{precision}, dan \textit{recall}. Pada metrik evaluasi ini, terdapat beberapa istilah yang umum digunakan, yaitu: 
+\begin{enumerate}
+	\item \textit{True Positive} (TP). TP menunjukkan hasil positif yang diprediksi dengan benar oleh model
+	\item \textit{True Negative} (TN). TN menunjukkan hasil negatif yang diprediksi dengan benar oleh model
+	\item \textit{False Positive} (FP). FP menunjukkan hasil positif yang salah diprediksi oleh model
+	\item \textit{False Negative} (FN). FN menunjukkan hasil negatif yang salah diprediksi oleh model
+\end{enumerate}
+
+Nilai TP, TN, FP, dan FN dapat divisualisasikan dalam bentuk matriks yang disebut sebagai \textit{confusion matrix} seperti pada gambar \ref{conf_mat}.
+
+\begin{figure}[H]
+	\center \includegraphics[width=300px]{assets/confusion_matrix}
+	\caption{ilustrasi \textit{confusion matrix}} 
+	\label{conf_mat}
+\end{figure}
+
+Seperti yang telah disebutkan sebelumnya, terdapat beberapa metrik evaluasi penting pada model klasifikasi/deteksi, yaitu:
+\begin{enumerate}
+	\item \textit{Accuracy}. \textit{Accuracy} menyatakan proporsi sampel yang kelasnya diprediksi secara benar oleh model. secara matematis dinyatakan oleh persamaan \ref{accuracy}. Pada masalah deteksi intrusi, \textit{accuracy} menunjukkan seberapa banyak aktivitas intrusi yang berhasil dideteksi oleh model.
+	\begin{equation}
+		\begin{split}
+			\text{accuracy} &= \frac{TP + TN}{TP + TN + FP + FN} 
+		\end{split}
+		\label{accuracy}
+	\end{equation}
+	\item \textit{Precision}. \textit{Precision} menyatakan berapa persentase sampel yang diprediksi secara benar oleh model pada suatu kelas dari keseluruhan sampel yang diprediksi model berada pada kelas tersebut. Pada masalah deteksi intrusi, \textit{precision} menyatakan persentase dari aktivitas yang dinyatakan sebagai serangan dan ternyata benar-benar serangan. Secara matematis, \textit{precision} dinyatakan oleh persamaan \ref{precision}.
+	\begin{equation}
+		\begin{split}
+			\text{precision} &= \frac{TP}{TP + FP} 
+		\end{split}
+		\label{precision}
+	\end{equation}
+	
+	\item \textit{Recall (True Positive Rate)}. Secara matematis, \textit{recall} atau \textit{True Positive Rate} (TPR) dinyatakan oleh persamaan \ref{recall}.
+	\begin{equation}
+		\begin{split}
+			\text{recall atau TPR} &= \frac{TP}{TP + FN} 
+		\end{split}
+		\label{recall}
+	\end{equation}
+	\textit{Recall} menyatakan proporsi sampel pada kelas yang diprediksi secara benar oleh model.
+\end{enumerate}
+
+%==============================================================
+\chapter{METODE PENELITIAN}
+Pada bab ini dijelaskan metode penelitian yang akan dilakukan, meliputi sumber data penelitian, dan tahap analisis yang akan dilakukan.
+
+\section{Sumber Data}
+Data yang digunakan untuk penelitian ini adalah dataset yang disediakan oleh \textit{Canadian Institute for Cybersecurity} pada situs https://www.unb.ca \\
+/cic/datasets/ids-2017.html. Data ini merupakan \textit{generated data} oleh CIC yang didesain untuk meniru interaksi alami manusia dan menghasilkan data \textit{traffic} yang realistis. Untuk dataset ini, \textit{Canadian Institute for Cybersecurity} membangun 25 profil user dengan beragam protokol, yaitu HTTP, HTTPS, FTP, SSH, dan \textit{email protocols}. 
+
+Dataset ini terdiri dari 79 kolom (deskripsi kolom pada lampiran 2) dan 2,830,743 baris yang merepresentasikan \textit{flow}, yaitu aktivitas pengiriman serangkaian paket data (\textit{packets}) antara 2 titik (\textit{node}) di jaringan dalam satu sesi komunikasi. Dari 79 kolom variabel, terdapat 1 kolom, yaitu 'label', yang akan diprediksi (variabel terikat) serta 77 kolom fitur (variabel bebas) penting yang akan digunakan pada analisis data. Sedangkan 1 kolom lainnya, yaitu 'Destination Port', tidak digunakan untuk analisis karena dianggap tidak memberikan kontribusi untuk proses deteksi intrusi.
+
+\section{Metode Analisis}
+Model yang digunakan untuk mengolah data dan mengembangkan sistem deteksi intrusi adalah model \textit{Deep Neural Network} (DNN). Proses komputasi untuk penelitian ini dilakukan menggunakan software Python dengan bantuan library TensorFlow dengan API Keras. Kode Program untuk penelitian ini tersediia pada lampiran 1. Dari data yang diperoleh, Model DNN akan dilatih untuk menentukan apakah suatu aktivitas pada jaringan merupakan aktivitas normal (BENIGN) atau serangan (ATTACK). 
+
+\begin{figure}[H]
+	\center \includegraphics[width=350px]{assets/diagram_penelitian}
+	\caption{Diagram alur penelitian} 
+	\label{diagram_penelitian}
+\end{figure}
+
+Gambar \ref{diagram_penelitian} menunjukkan tahapan analisis yang akan dilakukan dengan rincian sebagai berikut:
+\begin{enumerate}
+	\item Eksplorasi data mentah. Tahapan ini dilakukan untuk memberikan gambaran umum mengenai data. Pada kasus ini, informasi terpenting yang perlu diketahui tentang data adalah sebaran dari kelas serangan. Informasi ini akan memberikan gambaran umum bagaimana proporsi masing-masing kelas pada data. Informasi ini penting untuk memahami hasil prediksi yang diperoleh.
+	
+	\item \textit{Data preprocessing}. Tahapan \textit{data preprocessing} yang dilakukan meliputi pembagian data, \textit{data cleaning}, penskalaan data, dan transformasi data kategorik. Tahapan ini dilakukan untuk memperoleh data yang bebas dari kesalahan format serta skala data yang seragam.
+	
+	\item Konstruksi Model. Data hasil \textit{preprocessing} kemudian akan digunakan untuk melatih model DNN sehingga mampu mendeteksi intrusi jaringan. Model dilatih dengan \textit{hyperparameter} awal yang ditentukan.
+	
+	\item Evaluasi. Model yang diperoleh kemudian akan dievaluasi berdasarkan metrik evaluasi \textit{accuracy}, \textit{precision} dan \textit{recall}. Hasil evaluasi ini akan digunakan untuk mengatur \textit{hyperparameter} model sehingga memberikan hasil yang optimal.
+	
+	\item Interpretasi Hasil. Hasil evaluasi model dapat digunakan untuk memahami seberapa baik model kinerja model untuk deteksi intrusi ketika menghadapi skenario nyata.
+\end{enumerate}
+
+%==============================================================
+\chapter{HASIL DAN PEMBAHASAN}
+\section{Eksplorasi Data Mentah}
+Pada tahap ini akan diamati proporsi masing-masing kelas pada data. Hal ini penting sebagai pertimbangan untuk evaluasi performa model. Terdapat 15 kelas serangan pada dataset. Karena penelitian ini ditujukan untuk deteksi intrusi, maka semua kelas serangan pada data dikonversi menjadi kelas "ATTACK". Visualisasi untuk distribusi kelas ini disajikan pada gambar \ref{distribusi_kelas}:
+
+\begin{figure}[H]
+	\center \includegraphics[width=200px]{assets/pie-chart}
+	\caption{Plot Distribusi Kelas} 
+	\label{distribusi_kelas}
+\end{figure}
+
+Pada dataset ini juga terdapat beberapa \textit{missing values} yang harus ditangani sebelum model dikonstruksi. beberapa sampel missing values terlihat pada tabel \ref{missing_values}.
+\begin{table}[h!]
+	\centering
+	\caption{Sampel data aktivitas jaringan}
+	\label{missing_values}
+	\begin{longtable}{|r|r|r|r|r|}
+		\hline
+		Flow Bytes/s & Flow Packets/s  & Flow IAT Mean & Flow IAT Std & ... \\
+		\hline
+		NaN& NaN & 7 & 4 & ...  \\
+		\hline
+		NaN & NaN & 9 & 4 & ...  \\
+		\hline
+		NaN & NaN & 7 & 4 & ... \\
+		\hline
+		3 & 511 & 7 & 4 & ... \\
+		\hline
+		... & ... & ... & ... & ... \\
+		\hline
+	\end{longtable}
+\end{table}
+
+\section{Pra-pemrosesan Data}
+\subsection{Pembagian Data}
+Langkah pertama yang perlu dilakukan adalah pembagian data. Data dibagi menjadi data \textit{training}, \textit{validation}, dan \textit{testing}. Data \textit{training} digunakan untuk melatih model, data \textit{validation} digunakan untuk melihat performa model dan melakukan \textit{hyperparameter tuning}, dan data \textit{testing} digunakan untuk meninjau hasil akhir model yang diperoleh. Detail pembagian data disajikan pada tabel \ref{pembagian_data}. 
+
+\begin{table}[h!]
+	\centering
+	\caption{Proporsi Pembagian Data}
+	\label{pembagian_data}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		& \textit{Training} & \textit{Validation} & \textit{Testing} \\
+		\hline
+		Jumlah & 1243706 & 266509 & 266509 \\
+		\hline
+		Persentase & 75\% & 15\% & 15\% \\
+		\hline
+		Proporsi Kelas BENIGN & 81\% & 81\% & 81\% \\
+		\hline
+		Proporsi Kelas ATTACK & 19\% & 19\% & 19\% \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Penanganan \textit{Missing Values}}
+Seringkali data yang diperoleh, baik dari pengamatan langsung ataupun pihak eksternal, memiliki titik data yang rumpang. Nilai yang rumpang ini disebut sebagai \textit{missing value}. Tabel \ref{missing_values} menunjukkan sampel \textit{missing values} yang terdapat pada dataset CIC-IDS-2017. Terdapat berbagai macam metode untuk menangani \textit{missing value} pada data, seperti substitusi \textit{missing value} dengan median, mean, atau modus dari nilai pada kolom yang sama. Pada penelitian ini, \textit{missing values} akan disubstitusi dengan mean dari kolom yang bersesuaian.
+\begin{table}[h!]
+	\centering
+	\caption{Sampel data aktivitas jaringan}
+	\label{sampel_data}
+	\begin{longtable}{|r|r|r|r|r|}
+		\hline
+		Destination & Flow & Total Fwd & Total Backward & Total Length of  \\
+		Port & Duration & Packets & Packets & Fwd Packets \\
+		\hline
+		0 & 640 & 7 & 4 & 440  \\
+		\hline
+		1 & 900 & 9 & 4 & 600  \\
+		\hline
+		2 & 1205 & 7 & 4 & 2776 \\
+		\hline
+		3 & 511 & 7 & 4 & 452 \\
+		\hline
+		4 & 35396 & 9 & 4 & 612 \\
+		\hline
+	\end{longtable}
+\end{table}
+Berdasarkan tabel \ref{missing_values}, \textit{missing value} pada kolom \textit{Flow Duration} dapat disubstitusi dengan \textit{mean} dari kolom \textit{Flow Duration}, yaitu $\mu$.
+\begin{equation}
+	\mu = \frac{640 + 900 + 1205 + 511 + 35396 + ... }{1554633} = 20915909.1347
+	\label{mean_flow}
+\end{equation}
+
+\subsection{Transformasi Data Kategorik}
+Pada dataset, terdapat 1 data kategorik, yaitu kelas aktivitas pada jaringan dengan 2 nilai, yaitu "BENIGN" dan "ATTACK", dimana kelas "BENIGN" ditransformasi menjadi 0, dan kelas "ATTACK" ditransformasi menjadi 1. Sehingga, pada saat pelatihan, model DNN hanya perlu menentukan apakah suatu aktivitas perlu dikategorikan sebagai 0 atau 1.
+
+\subsection{Penskalaan Fitur}
+Penskalaan fitur (\textit{feature scaling}) merupakan proses yang dilakukan untuk mentransformasi nilai numerik/kuantitatif ke dalam skala/interval tertentu, misalnya interval -1 sampai 1. Proses ini dilakukan untuk mempercepat proses konvergensi pada saat pelatihan model dan mencegah data dengan jangkauan yang besar mendominasi model. Terdapat beberapa teknik yang umum digunakan untuk transformasi ini, yaitu \textit{min-max scaling}, \textit{mean scaling}, dan \textit{z-score scaling} (\textit{standardization}) \cite{pajankarHandsonMachineLearning2022}. Pada penelitian ini, akan digunakan teknik \textit{standardization} untuk mentransformasi fitur numerik pada dataset sehingga memiliki rata-rata $\mu$ dan simpangan baku $\sigma$. Transformasi dengan standarisasi dilakukan dengan menggunakan persamaan \ref{z-score}.
+\begin{equation}
+	Z = \frac{X-\mu}{\sigma}
+	\label{z-score}
+\end{equation}
+Pada persamaan \ref{z-score}, $X$ merupakan nilai awal yang ingin distandarisasi, dan $Z$ merupakan hasil standarisasi data. Dengan menggunakan \textit{z-score normalization}, fitur numerik \textit{Flow Duration} dapat dinormalisasi dengan menghitung mean dan ragam dari fitur tersebut.
+\begin{equation}
+	\begin{split}
+		\mu &= 20915909.1347 \\
+		\sigma &= \sqrt{\frac{(640-20915909.1347)^2 + (900-12.203)^2 + ...}{1554633}} \\
+		&= 751794.22
+	\end{split}
+\end{equation}  
+Dengan menggunakan informasi mean dan ragam dari nilai numerik pada kolom \textit{Flow Duration}, dapat dihitung \textit{z-score} sehingga menghasilkan tabel \ref{tabelNorm}.
+
+ \begin{longtable}{|l|l|l|}
+	\caption{Hasil Normalisasi Fitur \textit{Flow Duration}} \label{tabelNorm}\\
+	\hline
+	No & Flow Duration & Standardized Flow Duration \\ \hline
+	0 & 640 & -0.53790744 \\ \hline
+	1 & 900 & -0.53790744 \\ \hline
+	2 & 1205 & -0.53790744 \\ \hline
+	3 & 511	 & -0.53790743 \\ \hline
+	4 & 35396 & -0.5379074 \\ \hline
+	\vdots & \vdots & \vdots \\ \hline
+\end{longtable}
+
+
+\section{Konstruksi Model DNN} 
+Setelah dilakukan \textit{preprocessing}, data akan digunakan untuk melatih model DNN agar mampu melakukan tugas deteksi intrusi. Berikut beberapa hal penting yang perlu diperhatikan terkait model dan \textit{optimizer} yang digunakan :
+
+\begin{enumerate}
+	\item Arstitektur Model. Model DNN pada penelitian ini terdiri dari 5 \textit{layer}. 1 input layer, 1 output layer, dan 3 \textit{hidden layer}. Masing-masing \textit{hidden layer} secara berturut-turut memiliki 32, 64, dan 32 \textit{node}. 
+	
+	\item \textit{Batch size}. Model \textit{deep learning} tidak dilatih pada keseluruhan data sekaligus, melainkan pada beberapa subset data secara bergantian untuk efisiensi sumber daya komputasi. Ukuran \textit{batch} atau \textit{batch size} menyatakan ukuran data input yang digunakan untuk melatih dan mengupdate parameter model. Pada penelitian ini, \textit{batch} yang digunakan pada pelatihan untuk setiap \textit{epoch} berukuran 128.
+	
+	\item Fungsi aktivasi. Karena model DNN pada penelitian ini dikembangkan untuk kebutuhan klasifikasi biner, maka fungsi aktivasi yang digunakan adalah fungsi sigmoid yang menghasilkan probabilitas prediksi.
+	
+	\item \textit{Optimizer}. Model dilatih menggunakan \textit{ADAM optimizer} dengan 100 \textit{epoch} dan \textit{learning rate} sebesar 0.0001. \textit{Epoch} menyatakan banyak iterasi yang dilakukan untuk melatih model. proses pelatihan secara berulang ini memungkinkan model dapat belajar dari data dengan lebih baik.
+	
+	\item \textit{Loss function}. \textit{Loss function} yang digunakan untuk mengevaluasi performa model ini adalah \textit{binary cross-entropy}. Fungsi ini dipilih karena model DNN ini dilatih untuk melakukan klasifikasi biner.
+\end{enumerate}
+
+Tabel \ref{tabel_arsitektur} menunjukkan arsitektur model DNN yang diimplementasikan pada penelitian ini. Tabel \ref{tabel_arsitektur} menunjukkan bahwa terdapat total parameter sebanyak $384,965$ dengan \textit{output shape} yang bervariasi pada tiap \textit{layer}. \textit{Output shape} pada masing-masing \textit{layer} terdiri dari 2 nilai yang secara berturut-turut menunjukkan ukuran batch yang ditangani oleh layer tersebut dan jumlah \textit{node}-nya. Pada layer terakhir, terdapat 1 \textit{node} yang merepresentasikan probabilitas prediksi kelas. Nilai probabilitas yang sangat tinggi menunjukkan bahwa model memprediksi adanya intrusi.
+
+\begin{longtable}{|l|  c|  r|}
+	\caption{Tabel arsitektur model DNN}
+	\label{tabel_arsitektur} \\
+		\hline
+		Layer (type) & Output Shape & Param \# \\
+		\hline
+		Dense & (None, 32) & 2496 \\
+		\hline
+		Dense & (None, 64) & 2112 \\
+		\hline
+		Dense & (None, 32) & 2080 \\
+		\hline
+		Dense & (None, 1) & 33 \\
+		\hline
+\end{longtable}
+
+\begin{figure}[H]
+	\center \includegraphics[width=\linewidth]{assets/training_history}
+	\caption{Plot akurasi klasifikasi pada data \textit{training} dan \textit{validation}}
+	\label{training_history}
+\end{figure}
+
+Gambar \ref{training_history} menunjukkan tingkat akurasi yang dicapai oleh model DNN pselama proses pelatihan. Dapat diamati bahwa tren akurasi model menunjukkan bahwa model mendapatkan peningkatan akurasi yang signifikan selama beberapa \textit{epoch} awal dan mulai konvergen dengan sedikit fluktuasi. Grafik ini menunjukkan mengindikasikan bahwa model mempelajari data \textit{training} dengan baik dan bahkan melakukan \textit{klasifikasi} pada data \textit{validation} dengan akurasi yang sangat tinggi. 
+
+\subsection{Mekanisme Model}
+Untuk menjelaskan mekanisme model, Data akan disampel dengan 5 fitur saja. Model DNN untuk deteksi intrusi bekerja dengan mekanisme sebagai berikut:
+
+Misalkan inisiasi bobot awal model sebagai berikut :
+\begin{equation}
+	\begin{split}
+		\mathbf{W}_{1} =\mathbf{W}_{2} = \mathbf{W}_{3} = \mathbf{W}_{4} = \begin{bmatrix}
+			0.1 & 0.1 & \dots & 0.1 \\
+			\vdots & \vdots & \ddots & \vdots \\
+			0.1 & 0.1 & \dots & 0.1 \\
+		\end{bmatrix} &\in \mathbb{R}^{128 \times 6}, \\
+		X &\in \mathbb{R}^{6} \\
+	\end{split}
+\end{equation}
+
+\begin{itemize}
+	\item Untuk \textit{epoch} ke-1
+	\begin{itemize}
+		\item Untuk \textit{batch} ke-1
+		\begin{itemize}
+			\item Untuk data pertama pada \textit{batch}-1 ($X_1$)
+			\begin{enumerate}
+				\item Untuk \textit{layer} pertama
+				\begin{equation}
+					\begin{split}
+						X_1 &= \begin{bmatrix}
+							-0.53289452 \\
+							-0.01148982 \\
+							-0.01007426 \\
+							-0.04567971 \\
+							-0.00826494 \\
+							1 \\
+						\end{bmatrix} \\
+						A_1 &= \textit{ReLU}(\mathbf{W}_1X_1) \\
+						&= ReLU \left(
+						\begin{bmatrix}
+							0.1 & 0.1 & \dots & 0.1 \\
+							\vdots & \vdots & \ddots & \vdots \\
+							0.1 & 0.1 & \dots & 0.1 \\
+						\end{bmatrix} \begin{bmatrix}
+						-0.53289452 \\
+						-0.01148982 \\
+						-0.01007426 \\
+						-0.04567971 \\
+						-0.00826494 \\
+						1 \\
+						\end{bmatrix}
+						\right) \\ 
+						&= ReLU \left(\begin{bmatrix} 0.03915968 &  0.03915968 & 0.03915968 & ... &  0.03915968 \end{bmatrix}^{T} \right) \\
+						&= \begin{bmatrix} 0.03915968 &  0.03915968 & 0.03915968 & ... &  0.03915968 \end{bmatrix}^{T}
+					\end{split}
+				\end{equation}
+				Vektor $A_1$ akan diteruskan sebagai input untuk \textit{layer} ke-2
+				
+				\item Nilai aktivasi pada setiap \textit{neuron} di \textit{layer} ke-2 ($A_2$) akan dhitung dengan cara yang sama dengan perhitungan $A_1$. Begitu juga untuk \textit{layer} ke-3 dan ke-4 dengan mempertimbangkan fungsi aktivasi pada setiap \textit{layer}
+				
+			\end{enumerate} 
+				
+			\item Proses komputasi yang sama dilakukan pada data berikutnya sampai data terakhir pada \textit{batch} tersebut. Kemudian, akan dihitung \textit{loss function} yang diperoleh. \textit{Loss function} ini akan digunakan untuk mengoptimalkan nilai parameter $\mathbf{W}_{1}, \mathbf{W}_{2}, \mathbf{W}_{3}$ dan $\mathbf{W}_{4}$.
+		\end{itemize}
+		\item Proses komputasi yang sama dilakukan hingga \textit{batch} terakhir.
+	\end{itemize}
+	\item proses yang sama dilakukan pada setiap \textit{epoch}.
+\end{itemize}
+
+Mekanisme komputasi ini diimplementasikan menggunakan bahasa pemrograman \textit{Python} dengan bantuan \textit{framework Tensorflow} dan API \textit{Keras}. Model dikembangkan menggunakan arsitektur yang ditunjukkan oleh tabel \ref{tabel_arsitektur} dan dilatih sebanyak $70$ \textit{epoch} menggunakan \textit{ADAM optimizer}.
+
+\section{Hasil dan Evaluasi}
+Setelah melewati pelatihan sebanyak $70$ epoch, model mampu mencapai akurasi sebesar $99\%$ pada data \textit{validation}. \textit{Confusion matrix} pada gambar \ref{conf_mat_hasil} menunjukkan perbandingan hasil prediksi model dengan kelas yang sebenarnya. Berdasarkan gambar \ref{conf_mat_hasil} terlihat bahwa model mampu memprediksi hampir semua \textit{flow} normal (BENIGN) dan serangan \textit{ATTACK} dengan benar. 
+
+\begin{figure}[H]
+	\center \includegraphics[width=350px]{assets/conf_mat_hasil}
+	\caption{\textit{confusion matrix} hasil prediksi model} 
+	\label{conf_mat_hasil}
+\end{figure}
+
+Tabel \ref{classification_report} menunjukkan beberapa metrik evaluasi penting pada data \textit{testing} untuk masalah klasifikasi terhadap model yang telah dikembangkan. Berdasarkan tabel \ref{classification_report}, terlihat bahwa metrik \textit{precision} bernilai  $99\%$ pada kelas ATTACK dan nyaris $100\%$ pada kelas BENIGN.  Nilai \textit{precision} yang tinggi menunjukkan bahwa ketika model memprediksi adanya serangan, kemungkinan besar hal itu benar. Hal ini merupakan indikasi yang bagus untuk sebuah model deteksi, karena metrik ini menunjukkan bahwa model dapat diandalkan untuk mendeteksi intrusi. 
+\begin{table}[h!]
+	\centering
+	\caption{Classification Report}
+	\label{classification_report}
+	\begin{tabular}{|l|r|r|r|}
+		\hline
+		% Header Row
+		& \textbf{precision} & \textbf{recall} & \textbf{support} \\
+		\hline
+		% Data Rows (spasi sudah dibersihkan)
+		ATTACK & 0.99 & 0.98 & 50476 \\
+		\hline
+		BENIGN & 1.00 & 1.00 & 216033 \\
+		\hline
+		% Baris Akurasi (format sudah diperbaiki)
+		\multicolumn{4}{|c|}{Accuracy \hfill 1.00} \\
+		\hline
+		\multicolumn{4}{|c|}{Balanced Accuracy \hfill 0.99} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+Kolom \textit{recall} pada tabel \ref{classification_report} menunjukkan proporsi \textit{True Positive} (TP) terhadap semua \textit{flow} pada kelas yang terkait. Nilai ini juga menunjukkan bahwa emakin tinggi \textit{recall} yang diperoleh, maka semakin kecil pula nilai \textit{False Negative} (FN) yang didapatkan.  Berdasarkan tabel \ref{classification_report}, terlihat bahwa model yang telah dikonstruksi memiliki recall yang tinggi pada kedua kelas, baik kelas BENIGN ataupun kelas ATTACK. Hal ini mengindikasikan bahwa model mampu memprediksi hampir semua kelas dari \textit{flow} yang ada dengan benar. 
+
+Pada model yang dikembangkan untuk tujuan deteksi, nilai \textit{recall} yang tinggi ini merupakan poin penting untuk diperhatikan karena gagal mendeteksi intrusi (FN yang tinggi) justru lebih berbahaya daripada kegagalan memprediksi aktivitas biasa sebagai aktivitas serangan (FP yang tinggi). Dari tabel \ref{classification_report} dapat dilihat bahwa berdasarkan nilai \textit{recall} yang diperoleh, model sudah bekerja dengan cukup baik untuk mendeteksi intrusi, bahkan pada kelas serangan yang belum pernah dilihat sebelumnya.
+
+
+%==============================================================
+\chapter{KESIMPULAN DAN SARAN}
+
+\section{Kesimpulan}
+Berdasarkan hasil hasil yang diperoleh dari penelitian, dapat ditarik beberapa kesimpulan sebagai berikut :
+\begin{enumerate}
+	\item Model yang dikonstruksi, yaitu model \textit{deep neural network} (DNN) dengan arsitektur 3 \textit{hidden layer} dengan jumlah \textit{nuron} berturut-turut 32, 64, dan 32 memperoleh \textit{accuracy} dan \textit{balanced accuracy} yang konvergen ke nilai yang cukup tinggi, mencapai $99\%$ pada data \textit{testing}.
+	 
+	\item Berdasarkan \textit{classification report} pada tabel \ref{classification_report}, model menunjukkan performa yang cukup tinggi tidak hanya pada metrik \textit{accuracy}, tetapi juga pada metrik \textit{precision} dan \textit{recall} pada pada kedua kelas dengan nilai lebih dari $90\%$. Artinya, model mampu mendeteksi hampir semua kejadian serangan yang mungkin muncul. Hal ini merupakan indikasi yang baik pada model untuk kasus deteksi intrusi.
+\end{enumerate}
+
+\section{Saran}
+Saran penulis untuk penelitian berikutnya yaitu :
+\begin{enumerate}
+	\item Melatih model DNN pada dataset dengan jenis serangan yang lebih beragam untuk mengevaluasi seberapa baik generalisasi model pada data dengan jenis serangan yang lebih beragam
+	
+	\item Melakukan reduksi/ekstraksi fitur supaya proses pelatihan model berjalan dengan lebih efisien.
+\end{enumerate}
+
+%%=======================================================
+
+\newpage
+\addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\newpage
+\addcontentsline{toc}{chapter}{LAMPIRAN}
+\chapter*{LAMPIRAN}
+	\newappendix{\normalsize Lampiran 1 \textnormal{Kode Program Python}}
+	\begin{lstlisting}
+# IMPORTANT: SOME KAGGLE DATA SOURCES ARE PRIVATE
+# RUN THIS CELL IN ORDER TO IMPORT YOUR KAGGLE DATA SOURCES.
+import kagglehub
+kagglehub.login()
+
+# IMPORTANT: RUN THIS CELL IN ORDER TO IMPORT YOUR KAGGLE DATA SOURCES,
+# THEN FEEL FREE TO DELETE THIS CELL.
+# NOTE: THIS NOTEBOOK ENVIRONMENT DIFFERS FROM KAGGLE'S PYTHON
+# ENVIRONMENT SO THERE MAY BE MISSING LIBRARIES USED BY YOUR
+# NOTEBOOK.
+
+dataset_path = kagglehub.dataset_download('chethuhn/network-intrusion-dataset')
+
+print('Data source import complete. \n')
+print("Information about your data sources:")
+print(f"Dataset path: {dataset_path}")
+
+"""## Import Library"""
+
+# Import library yang diperlukan
+import pandas as pd
+import numpy as np
+import os
+from sklearn.model_selection import train_test_split, TimeSeriesSplit
+from sklearn.preprocessing import StandardScaler, LabelEncoder, MinMaxScaler
+from sklearn.impute import SimpleImputer
+import tensorflow as tf
+from tensorflow.keras import layers, Model
+import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report, confusion_matrix
+import seaborn as sns
+
+"""## Preprocessing Data
+
+### Load Data
+"""
+
+# Fungsi untuk membaca dan preprocessing setiap file
+def read_and_clean_file(file_path):
+print(f"Membaca file: {file_path}")
+df = pd.read_csv(file_path, low_memory=False, sep=",")
+
+# Bersihkan nama kolom dari whitespace
+df.columns = df.columns.str.strip()
+
+# Hapus kolom yang tidak diperlukan
+redundant_column = ['Destination Port']
+df = df.drop(redundant_column, axis=1)
+
+# drop baris yang tidak punya label
+df.dropna(subset = ['Label'], inplace=True)
+
+# Handling missing values dan infinite values
+df = df.replace([np.inf, -np.inf], np.nan)
+
+return df
+
+
+# Baca semua file CSV dari folder
+data1 = dataset_path + "/Monday-WorkingHours.pcap_ISCX.csv"
+data2 = dataset_path + "/Tuesday-WorkingHours.pcap_ISCX.csv"
+data3 = dataset_path + "/Wednesday-workingHours.pcap_ISCX.csv"
+data4 = dataset_path + "/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"
+data5 = dataset_path + "/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
+data6 = dataset_path + "/Friday-WorkingHours-Morning.pcap_ISCX.csv"
+data7 = dataset_path + "/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv"
+data8 = dataset_path + "/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv"
+
+
+# Buat list semua dataset yang tersedia
+all_files = [data2, data3, data4, data5, data6, data7, data8]
+
+# Membaca file dan mengkonversi semua data file dari list "all_files" menjadi dataframe
+dataframes = []
+for file in all_files:
+df = read_and_clean_file(file)
+dataframes.append(df)
+del df
+
+# Menggabungkan semua dataframe
+print("Menggabungkan semua file...")
+df = pd.concat(dataframes, ignore_index=True)
+try:
+print("Semua file dataset berhasil digabungkan!")
+except:
+print("Error! file dataset tidak berhasil digabungkan")
+
+"""### Pembersihan Data Duplikat"""
+
+# ganti nama kolom dengan cara hapus whitespaces
+col_names = {col: col.strip() for col in df.columns}
+df.rename(columns = col_names, inplace = True)
+
+# informasi data duplikat
+dups = df[df.duplicated()]
+print(f'Banyak data duplikat : {len(dups)}')
+print(f'Banyak data sebelum duplikat : {df.shape[0]}')
+
+print("menghapus data duplikat...")
+
+# Hapus data duplikat
+df.drop_duplicates(inplace = True)
+print("data duplikat selesai dihapus!")
+df.shape
+print(f"banyak data setelah data duplikat dihapus : {df.shape[0]}")
+
+"""### Persiapan Label Kelas untuk Klasifikasi Biner"""
+
+# konversi semua label selain BENIGN jadi ATTACK
+df["Label"] = df["Label"].where(df["Label"] == "BENIGN", "ATTACK")
+print("Informasi Kelas : ")
+df["Label"].unique()
+
+"""## Informasi Umum Dataset"""
+
+# Menampilkan informasi dataset
+print("\nInformasi Dataset:")
+print(f"\nJumlah total data: {len(df)}")
+print(f"Jumlah fitur : {len(df.columns)}")
+print("\nDistribusi Label sebelum preprocessing:")
+
+# tabel distribusi label
+def create_distribution_table(df):
+label_dist = pd.DataFrame(df['Label'].value_counts())
+label_dist['percentage'] = df['Label'].value_counts()/len(df)
+return label_dist
+
+create_distribution_table(df)
+
+"""## Pemisahan Data Fitur (X) dan Output (y)"""
+
+numerical_columns = df.select_dtypes(include=[np.number]).columns
+X = df[numerical_columns]
+y = df["Label"]
+print(f"jumlah fitur : {len(X.columns)}")
+print(f"jumlah label : {len(y.unique())}")
+
+# Memisahkan data menjadi training, validation, dan testing dengan stratify
+# Menggunakan train_test_split dua kali: pertama untuk memisahkan training dan temp (validation + test),
+# kemudian temp dipisah menjadi validation dan test
+
+# Pertama, pisahkan data menjadi training dan temporary (untuk validation dan test)
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
+
+# Kedua, pisahkan temporary menjadi validation dan testing
+# Ukuran test_size=0.5 berarti membagi temporary set (30% dari data asli) menjadi dua bagian yang sama besar (15% validation dan 15% test dari data asli)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42, stratify=y_temp)
+
+print(f"Ukuran data training (X_train, y_train): {X_train.shape}, {y_train.shape}")
+print(f"Ukuran data validation (X_val, y_val): {X_val.shape}, {y_val.shape}")
+print(f"Ukuran data testing (X_test, y_test): {X_test.shape}, {y_test.shape}")
+
+# Memeriksa distribusi label di setiap set
+print("\nDistribusi Label pada Training Set:")
+print(y_train.value_counts(normalize=True))
+
+print("\nDistribusi Label pada Validation Set:")
+print(y_val.value_counts(normalize=True))
+
+print("\nDistribusi Label pada Testing Set:")
+print(y_test.value_counts(normalize=True))
+
+# prompt: setting supaya semua nilai kolom pada tabel dataframe muncul, tidak hanya sebagian
+
+import pandas as pd
+pd.set_option('display.max_columns', None)
+
+# prompt: tunjukkan data dengan baris missing value
+
+# Periksa baris dengan missing values dalam DataFrame
+print("\nBaris dengan missing values:")
+df[df.isnull().any(axis=1)]
+
+"""## Transformasi Data"""
+
+# imputer
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean', copy=False)
+print("fitting imputer...")
+imputer.fit(X_train)
+print("selesai!")
+
+# scaler
+scaler = StandardScaler(copy=False)
+print("\nfitting scaler...")
+scaler.fit(X_train)
+print("selesai!")
+
+# label encoder (le)
+le = LabelEncoder()
+print("\nfitting label encoder...")
+le.fit(y_train.astype(str))
+print("selesai!")
+
+for i, label in enumerate(le.classes_):
+print(f"i : {i} , label : {label}")
+
+# Menampilkan informasi kelas
+print("\nKelas yang terdeteksi:")
+for i, label in enumerate(le.classes_):
+count = (df["Label"] == le.classes_[i]).sum()
+print(f"{label}: {count} samples (encoded as {i})")
+
+def transform_data(X, y, scaler, imputer, le):
+# Handling missing values untuk dataset training
+print("\nMenangani missing values...")
+X = imputer.transform(X)
+print("selesai!")
+
+# Normalisasi Data
+print("\nMelakukan normalisasi data...")
+X = scaler.transform(X)
+print("selesai!")
+
+# Pelabelan Kelas
+num_classes = len(le.classes_)
+print("\nMelakukan one-hot encoding...")
+y = le.transform(y)
+print("selesai!")
+
+return X, y
+
+## Transformasi Data Training
+X_train, y_train = transform_data(X_train, y_train, scaler, imputer, le)
+
+## Transformasi Data Validation
+X_val, y_val = transform_data(X_val, y_val, scaler, imputer, le)
+
+# Transformmasi data testing
+X_test, y_test = transform_data(X_test, y_test, scaler, imputer, le)
+
+"""## Konstruksi Model DNN"""
+
+# prompt: buat model neural network dengan 3 layer dan jumlah neuron masing masing 32, 64, dan 32 untuk masalah klasifikasi biner
+
+# Membangun model DNN
+input_shape = (X_train.shape[1],) # Bentuk input sesuai dengan jumlah fitur
+
+model = tf.keras.Sequential([
+layers.InputLayer(input_shape=input_shape),
+layers.Dense(32, activation='relu'), # Layer pertama dengan 32 neuron
+layers.Dense(64, activation='relu'), # Layer kedua dengan 64 neuron
+layers.Dense(32, activation='relu'), # Layer ketiga dengan 32 neuron
+layers.Dense(1, activation='sigmoid') # Output layer dengan 1 neuron (untuk klasifikasi biner) dan sigmoid
+])
+
+# Compile Model
+optimizer = tf.keras.optimizers.Adam(learning_rate=0.0001)
+model.compile(optimizer=optimizer,
+loss='binary_crossentropy',
+metrics=['accuracy', 'precision', 'recall'])
+
+history = model.fit(X_train, y_train,
+epochs=70,
+batch_size=128,
+validation_data=(X_val, y_val)
+)
+
+# Menampilkan ringkasan model
+model.summary()
+
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.title('DNN Training History')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.savefig("training_history")
+
+# Evaluasi model
+y_pred_prob = model.predict(X_test)
+y_pred_classes = (y_pred_prob > 0.5).astype(int)
+y_test_classes = y_test
+
+# Tampilkan hasil evaluasi
+print("\nClassification Report:")
+print(classification_report(y_test_classes, y_pred_classes, target_names=le.classes_))
+
+import matplotlib.pyplot as plt
+# Confusion Matrix
+cm = confusion_matrix(y_test_classes, y_pred_classes)
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=le.classes_, yticklabels=le.classes_)
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted Label')
+plt.ylabel('True Label')
+plt.show()
+
+from sklearn.metrics import balanced_accuracy_score
+
+balanced_acc = balanced_accuracy_score(y_test_classes, y_pred_classes)
+print(f"Balanced Accuracy: {balanced_acc}")
+
+# Simpan model
+print("\nMenyimpan model...")
+model.save('model.keras')
+
+import pickle
+
+# Simpan history ke file
+with open('history.pkl', 'wb') as file_pi:
+pickle.dump(history.history, file_pi)
+
+# Simpan label encoder
+import joblib
+joblib.dump(le, 'label_encoder.joblib')
+joblib.dump(scaler, 'scaler.joblib')
+joblib.dump(imputer, 'imputer.joblib')
+
+
+	\end{lstlisting}
+\newpage
+
+\begin{landscape}
+	\newappendix{\normalsize Lampiran 2 \textnormal{Dataset Intrusi}}
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			No. & Flow & Total  & Total & Total Length  & ... & ... & Idle Max & Idle Min & Label \\
+			& Duration & Fwd Packets & Backward Packets & Fwd Packets &  &  & Max & Min &  \\
+			\hline
+			0 &640 &7 &4 &440 &... &... &0 &0 &BENIGN \\
+			1 &900 &9 &4 &600 &... &... &0 &0 &BENIGN \\
+			2 &1205 &7 &4 &2776 &... &... &0 &0 &BENIGN \\
+			3 &511 &7 &4 &452 &... &... &0 &0 &BENIGN \\
+			4 &773 &9 &4 &612 &... &... &0 &0 &BENIGN \\
+			5 &986 &9 &6 &3100 &... &... &0 &0 &BENIGN \\
+			6 &935 &9 &6 &3074 &... &... &0 &0 &BENIGN \\
+			7 &572849 &15 &12 &4076 &... &... &0 &0 &BENIGN \\
+			8 &1 &2 &1 &0 &... &... &0 &0 &BENIGN \\
+			9 &1075 &9 &9 &3100 &... &... &0 &0 &BENIGN \\
+			10 &2687 &9 &6 &3074 &... &... &0 &0 &BENIGN \\
+			11 &14263712 &21 &12 &1664 &... &... &0 &0 &BENIGN \\
+			12 &14257993 &11 &6 &2378 &... &... &0 &0 &BENIGN \\
+			13 &68 &1 &3 &0 &... &... &0 &0 &BENIGN \\
+			14 &58 &1 &3 &0 &... &... &0 &0 &BENIGN \\
+			15 &26641766 &4 &4 &227 &... &... &0 &0 &BENIGN \\
+			16 &34256029 &39 &34 &12094 &... &... &0 &0 &BENIGN \\
+			17 &62 &1 &3 &0 &... &... &0 &0 &BENIGN \\
+			18 &310531 &15 &13 &938 &... &... &0 &0 &BENIGN \\
+			\vdots &\vdots & \vdots &\vdots &\vdots &... &... &\vdots &\vdots &\vdots \\
+			\hline
+		\end{tabular}
+	\end{table}
+	\noindent Dataset lengkap tersedia di halaman https://www.unb.ca/cic/datasets/ids-2017.html
+\end{landscape}
+\newpage
+	\newappendix{\normalsize Lampiran 3 \textnormal{Keterangan fitur/variabel}}
+\begin{table}[h!]
+	\centering
+	\begin{longtable}{|p{3cm}| p{10cm}|}
+		\hline
+		Variabel/Fitur & Keterangan \\
+		\hline
+		Flow Duration & Durasi total aliran (flow) dalam mikrodetik. \\
+		\hline
+		Total Fwd Packets & Jumlah total paket yang dikirim di arah maju (dari sumber ke tujuan). \\
+		\hline
+		Total Backward Packets & Jumlah total paket yang dikirim di arah mundur (dari tujuan kembali ke sumber). \\
+		\hline
+		Total Length of Fwd Packets & Total panjang (dalam byte) semua paket di arah maju. \\
+		\hline
+		Total Length of Bwd Packets & Total panjang (dalam byte) semua paket di arah mundur. \\
+		\hline
+		Fwd Packet Length Max & Panjang maksimum paket di arah maju. \\
+		\hline
+		Fwd Packet Length Min & Panjang minimum paket di arah maju. \\
+		\hline
+		Fwd Packet Length Mean & Rata-rata panjang paket di arah maju. \\
+		\hline
+		Fwd Packet Length Std & Standar deviasi panjang paket di arah maju. \\
+		
+		Bwd Packet Length Max & Panjang maksimum paket di arah mundur. \\
+		\hline
+		Bwd Packet Length Min & Panjang minimum paket di arah mundur. \\
+		\hline
+		Bwd Packet Length Mean & Rata-rata panjang paket di arah mundur. \\
+		\hline
+		Bwd Packet Length Std & Standar deviasi panjang paket di arah mundur. \\
+		\hline
+		Flow Bytes/s & Jumlah byte per detik dalam aliran. \\
+		\hline
+		Flow Packets/s & Jumlah paket per detik dalam aliran. \\
+		\hline
+		Flow IAT Mean & Rata-rata waktu antar kedatangan (Inter-Arrival Time) untuk semua paket dalam aliran. \\
+		\hline
+		Flow IAT Std & Standar deviasi waktu antar kedatangan untuk semua paket dalam aliran. \\
+		\hline
+		Flow IAT Max & Waktu antar kedatangan maksimum dalam aliran. \\
+		\hline
+		Flow IAT Min & Waktu antar kedatangan minimum dalam aliran. \\
+		\hline
+		Fwd IAT Total & Total waktu antar kedatangan untuk semua paket di arah maju. \\
+		\hline
+		Fwd IAT Mean & Rata-rata waktu antar kedatangan untuk paket di arah maju. \\
+		\hline
+	\end{longtable}
+\end{table}
+\newpage
+
+\begin{table}[h!]
+	\centering
+	\begin{longtable}{|p{3cm} |p{10cm}|}
+		\hline
+		Fwd IAT Std & Standar deviasi waktu antar kedatangan paket di arah maju. \\
+		\hline
+		Fwd IAT Max & Waktu antar kedatangan maksimum paket di arah maju. \\
+		\hline
+		Fwd IAT Min & Waktu antar kedatangan minimum paket di arah maju. \\
+		\hline
+		Bwd IAT Total & Total waktu antar kedatangan paket di arah mundur. \\
+		\hline
+		Bwd IAT Mean & Rata-rata waktu antar kedatangan paket di arah mundur. \\
+		\hline
+		Bwd IAT Std & Standar deviasi waktu antar kedatangan paket di arah mundur. \\
+		\hline
+		Bwd IAT Max & Waktu antar kedatangan maksimum paket di arah mundur. \\
+		\hline
+		Bwd IAT Min & Waktu antar kedatangan minimum paket di arah mundur. \\
+		\hline
+		Fwd PSH Flags & Jumlah flag PSH aktif di arah maju. \\
+		\hline
+		Bwd PSH Flags & Jumlah flag PSH aktif di arah mundur. \\
+		\hline
+		Fwd URG Flags & Jumlah flag URG aktif di arah maju. \\
+		\hline
+		Bwd URG Flags & Jumlah flag URG aktif di arah mundur. \\
+		\hline
+		Fwd Header Length & Total ukuran header dalam byte di arah forward. \\
+		\hline
+		Bwd Header Length & Total ukuran header dalam byte di arah backward. \\
+		\hline
+		Fwd Packets/s & Jumlah paket forward yang ditransfer per detik. \\
+		\hline
+		Bwd Packets/s & Jumlah paket backward yang ditransfer per detik. \\
+		\hline
+		Min Packet Length & Ukuran paket minimum dalam keseluruhan aliran. \\
+		\hline
+		Max Packet Length & Ukuran paket maksimum dalam keseluruhan aliran. \\
+		\hline
+		Packet Length Mean & Ukuran rata-rata paket dalam keseluruhan aliran. \\
+		\hline
+		Packet Length Std & Standar deviasi ukuran paket dalam keseluruhan aliran. \\
+		\hline
+		Packet Length Variance & Varian dari ukuran paket dalam keseluruhan aliran. \\
+		\hline
+		FIN Flag Count & Jumlah total flag FIN dalam aliran. \\
+		\hline
+		SYN Flag Count & Jumlah total flag SYN dalam aliran. \\
+		\hline
+		RST Flag Count & Jumlah total flag RST dalam aliran. \\
+		\hline
+		PSH Flag Count & Jumlah total flag PSH dalam aliran. \\
+		\hline
+		ACK Flag Count & Jumlah total flag ACK dalam aliran. \\
+		\hline
+		URG Flag Count & Jumlah total flag URG dalam aliran. \\
+		\hline
+		CWE Flag Count & Jumlah total flag CWE (Congestion Window Reduced) dalam aliran. \\
+		\hline
+	\end{longtable}
+\end{table}
+\newpage
+
+\begin{table}[h!]
+	\centering
+	\begin{longtable}{|p{3cm} | p{10cm} |}
+		\hline
+		ECE Flag Count & Jumlah total flag ECE (ECN-Echo) dalam aliran. \\
+		\hline
+		Down/Up Ratio & Rasio jumlah paket backward terhadap paket forward. \\
+		\hline
+		Average Packet Size & Ukuran rata-rata paket (termasuk forward dan backward). \\
+		\hline
+		Avg Fwd Segment Size & Ukuran rata-rata segmen di arah forward (sama dengan `Fwd Packet Length Mean`). \\
+		\hline
+		Avg Bwd Segment Size & Ukuran rata-rata segmen di arah backward (sama dengan `Bwd Packet Length Mean`). \\
+		\hline
+		Fwd Header Length.1 & Fitur duplikat dari `Fwd Header Length`. \\
+		\hline
+		Fwd Avg Bytes/Bulk & Rata-rata byte per bulk di arah forward (seringkali 0). \\
+		\hline
+		Fwd Avg Packets/Bulk & Rata-rata paket per bulk di arah forward (seringkali 0). \\
+		\hline
+		Fwd Avg Bulk Rate & Rata-rata laju bulk di arah forward (seringkali 0). \\
+		\hline
+		Bwd Avg Bytes/Bulk & Rata-rata byte per bulk di arah backward (seringkali 0). \\
+		\hline
+		Bwd Avg Packets/Bulk & Rata-rata paket per bulk di arah backward (seringkali 0). \\
+		\hline
+		Bwd Avg Bulk Rate & Rata-rata laju bulk di arah backward (seringkali 0). \\
+		\hline
+		Subflow Fwd Packets & Rata-rata jumlah paket dalam sub-aliran forward. \\
+		\hline
+		Subflow Fwd Bytes & Rata-rata jumlah byte dalam sub-aliran forward. \\
+		\hline
+		Subflow Bwd Packets & Rata-rata jumlah paket dalam sub-aliran backward. \\
+		\hline
+		Subflow Bwd Bytes & Rata-rata jumlah byte dalam sub-aliran backward. \\
+		\hline
+		Init Win bytes forward & Total byte yang dikirim pada jendela TCP awal di arah forward. \\
+		\hline
+		Init Win bytes backward & Total byte yang dikirim pada jendela TCP awal di arah backward. \\
+		\hline
+		act data pkt fwd & Jumlah paket forward yang memiliki payload (muatan data > 0). \\
+		\hline
+		min seg size forward & Ukuran minimum header yang diamati di arah forward (biasanya 20 untuk TCP). \\
+		\hline
+		Active Mean & Waktu rata-rata aliran aktif sebelum menjadi idle. \\
+		\hline
+		Active Std & Standar deviasi waktu aktif aliran. \\
+		\hline
+		Active Max & Waktu aktif maksimum aliran. \\
+		\hline
+		Active Min & Waktu aktif minimum aliran. \\
+		\hline
+		Idle Mean & Waktu idle (jeda) rata-rata dalam aliran. \\
+		\hline
+		Idle Std & Standar deviasi waktu idle dalam aliran. \\
+		\hline
+		Idle Max & Waktu idle maksimum dalam aliran. \\
+		\hline
+		Idle Min & Waktu idle minimum dalam aliran. \\
+		\hline
+	\end{longtable}
+\end{table}
+
+
+\newpage
+
+\end{document}
+%=============================================================
